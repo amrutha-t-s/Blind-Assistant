@@ -6,7 +6,8 @@ print("Loading AI Models...")
 # Load models
 general_model = YOLO(GENERAL_MODEL)
 currency_model = YOLO(CURRENCY_MODEL)
-pothole_model = YOLO(POTHOLE_MODEL)
+
+# pothole_model = YOLO(POTHOLE_MODEL)
 
 print("All Models Loaded Successfully")
 
@@ -17,14 +18,8 @@ def run_model(model, frame, object_type):
 
     try:
 
-        print(f"\nRunning {object_type} model...")
-
-        # Check camera frame
         if frame is None:
-            print("Frame is None")
             return detections
-
-        print("Frame Shape:", frame.shape)
 
         results = model.predict(
             source=frame,
@@ -32,8 +27,6 @@ def run_model(model, frame, object_type):
             imgsz=640,
             verbose=False
         )
-
-        print(f"{object_type} model prediction successful.")
 
         for result in results:
 
@@ -78,10 +71,11 @@ def detect(frame):
         "currency"
     ))
 
-    detections.extend(run_model(
-        pothole_model,
-        frame,
-        "pothole"
-    ))
+    # Pothole model disabled
+    # detections.extend(run_model(
+    #     pothole_model,
+    #     frame,
+    #     "pothole"
+    # ))
 
     return detections
